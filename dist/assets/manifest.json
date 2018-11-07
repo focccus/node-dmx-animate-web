@@ -1,0 +1,25 @@
+{
+    "name": "Node Dmx Animate Web Interface",
+    "short_name": "Node Dmx Animate",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "/128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "/64.png",
+            "sizes": "64x64",
+            "type": "image/png"
+        },
+        {
+            "src": "/32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#2196f3",
+    "background_color": "#303030",
+    "display": "standalone"
+}
