@@ -1,0 +1,17 @@
+<div class="grid">
+  <mat-card *ngFor="let sequence of sequences" matRipple matRippleCentered="true" (click)="playing != sequence ? runSeq(sequence): stopSeq(sequence)">
+    <mat-card-title style="text-align:center">
+        {{sequence.name}}
+      </mat-card-title>
+    <mat-card-footer *ngIf="playing != sequence">
+      <button mat-icon-button>
+        <mat-icon *ngIf="playing != sequence">play_arrow</mat-icon>
+      </button>
+      <div style="height: 5px"></div>
+    </mat-card-footer>
+    <mat-card-footer *ngIf="playing == sequence">
+      <button mat-icon-button><mat-icon *ngIf="playing == sequence">stop</mat-icon></button>
+      <mat-progress-bar *ngIf="playing == sequence" mode="determinate" [value]="sequence.progress"></mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+</div>

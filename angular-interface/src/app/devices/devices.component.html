@@ -1,0 +1,69 @@
+<div class="grid">
+  <mat-card *ngFor="let device of devices">
+    <mat-card-title>
+      <span (click)="selDev = device"><mat-icon *ngIf="device.isGroup">add_to_photos</mat-icon>{{device.name}}</span>
+      <input class="colorPicker" cpPosition="left" *ngIf="device.isRgb" [colorPicker]="getColor(device)" cpDisableInput="true"   cpOutputFormat="rgba" [style.background]="getColor(device)" cpAlphaChannel="disabled" [value]="" (colorPickerChange)="changePickColor(device,$event)"/>
+    </mat-card-title>
+    <div class="overflow">
+    <mat-card-content *ngIf="device.channels">
+      <ng-container *ngFor="let channel of device.channels">
+        <p class="channel-title" *ngIf="!device.changeable || !device.changeable[channel]" (dblclick)="device.changeable[channel] = true" >{{channel}} <span *ngIf="device.state[channel] && device.state[channel] != 'off'">:{{device.state[channel]}}</span></p>
+        <input type="number" class="channel-title" *ngIf="device.changeable && device.changeable[channel]" (dblclick)="device.changeable[channel] = false" (keydown.enter)="device.changeable[channel] = false" [(ngModel)]="device.state[channel]" (blur)="sliderChanged(device)">
+      </ng-container>
+    </mat-card-content>
+    <mat-card-content *ngIf="device.channels">
+      <mat-slider vertical (input)="sliderChanged(device,$event,channel)"
+      *ngFor="let channel of device.channels"
+      thumbLabel tickInterval="1" min=0 max=255
+      [(ngModel)]="device.state[channel]"
+      (change)="sliderChanged(device,$event)">
+      {{channel}}</mat-slider>
+    </mat-card-content>
+    </div>
+  </mat-card>
+</div>
+<button mat-raised-button (click)="onBlackout()" color="primary" style="margin: 16px">Blackout all</button>
+
+<mat-card class="floating" *ngIf="selDev">
+  <mat-card-title>
+    <span (click)="selDev = null"><mat-icon *ngIf="selDev.isGroup">add_to_photos</mat-icon>{{selDev.name}}</span>
+    <input class="colorPicker" *ngIf="selDev.isRgb" cpPosition="left" [colorPicker]="getColor(selDev)" cpDisableInput="true"   cpOutputFormat="rgba" [style.background]="getColor(selDev)" cpAlphaChannel="disabled" [value]="" (colorPickerChange)="changePickColor(selDev,$event)"/>
+  </mat-card-title>
+  <div class="overflow">
+  <mat-card-content *ngIf="selDev.channels">
+    <ng-container *ngFor="let channel of selDev.channels">
+      <p class="channel-title" *ngIf="!selDev.changeable || !selDev.changeable[channel]" (dblclick)="selDev.changeable[channel] = true" >{{channel}} <span *ngIf="selDev.state[channel] && selDev.state[channel] != 'off'">:{{selDev.state[channel]}}</span></p>
+      <input type="number" class="channel-title" *ngIf="selDev.changeable && selDev.changeable[channel]" (dblclick)="selDev.changeable[channel] = false" (keydown.enter)="selDev.changeable[channel] = false" [(ngModel)]="selDev.state[channel]" (blur)="sliderChanged(selDev)">
+    </ng-container>
+  </mat-card-content>
+  <mat-card-content *ngIf="selDev.channels">
+    <mat-slider vertical
+    *ngFor="let channel of selDev.channels" (input)="sliderChanged(selDev,$event,channel)"
+    thumbLabel tickInterval="1" min=0 max=255
+    [(ngModel)]="selDev.state[channel]"
+    (change)="sliderChanged(selDev,$event)">
+    {{channel}}</mat-slider>
+  </mat-card-content>
+  </div>
+  <mat-card-title *ngIf="selDev.programs">
+    Actions
+    </mat-card-title>
+  <mat-card-content *ngIf="selDev.programs">
+    <button style="margin: 8px" *ngFor="let program of selDev.programs" mat-stroked-button color="primary" (click)="executeProgram(selDev,[{type: program}])">{{program}}</button>
+  </mat-card-content>
+  <mat-card-footer>
+    <mat-form-field style="margin: 8px 32px;width: 240px">
+      <input type="text" matInput placeholder="execute programm manually" [(ngModel)]="action" (keydown.enter)="executeInput(selDev,action)">
+      <button mat-button *ngIf="action" matSuffix mat-icon-button aria-label="Clear" (click)="executeInput(selDev,action)">
+       <mat-icon>send</mat-icon>
+      </button>
+    </mat-form-field>
+    <span *ngIf="error">{{error}}</span>
+    <button mat-raised-button *ngIf="!selDev.isSoundActive && selDev.reactSound" (click)="toggleMic(selDev)" color="accent">Soundactive Off</button>
+    <button mat-raised-button *ngIf="selDev.isSoundActive && selDev.reactSound" (click)="toggleMic(selDev)" color="primary">Soundactive On</button>
+    <label for="">Sensitivity</label>
+    <mat-slider [(ngModel)]="soundSensitive" thumbLabel min=10 max=200></mat-slider>
+    <label for="">Smoothness(fade in ms)</label>
+    <mat-slider [(ngModel)]="soundSmooth" thumbLabel min=1 max=1000></mat-slider>
+  </mat-card-footer>
+</mat-card>

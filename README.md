@@ -1,6 +1,6 @@
 # dmx-animate-web
 ![enter image description here](https://i.imgur.com/o1gnQVH.png)
-This module acts as a http API and Webinterface to control dmx devices via [node-dmx-animate]().
+This module acts as a http API and Webinterface to control dmx devices via [node-dmx-animate](https://github.com/Stevertus/node-dmx-animate).
 Please familiarize yourself with the concept of the library, because we'll rely on it here.
 ## Installation
 After you've installed `dmx-animate` install `dmx-animate-web` with
@@ -8,7 +8,7 @@ After you've installed `dmx-animate` install `dmx-animate-web` with
 npm i dmx-animate-web --save
 ```
 ## Configuration
-Configure dmx-animate, sequences and devices as shown here: [node-dmx-animate]()
+Configure dmx-animate, sequences and devices as shown here: [node-dmx-animate](https://github.com/Stevertus/node-dmx-animate)
 But add a `dmx-animate-web` import and create a instance:
 ```js
 const dmxAnimate = require('dmx-animate')

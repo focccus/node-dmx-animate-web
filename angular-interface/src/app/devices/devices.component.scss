@@ -1,0 +1,67 @@
+.grid {
+  display: grid;
+  grid-gap: 4px;
+  grid-template-columns: 100%;
+  width: calc(100% - 16px);
+  mat-card {
+    max-width: 100%;
+  }
+}
+.floating {
+  height: calc(100vh - 120px);
+  width: calc(100vw - 64px);
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  z-index: 10;
+}
+.overflow {
+  margin: 0 - 16px;
+  overflow-x: auto;
+}
+mat-card-content {
+  padding: 8px 16px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(48px, auto);
+  .channel-title {
+    height: 16px;
+    margin: 0;
+    text-align: center;
+    line-height: 16px;
+  }
+  input.channel-title {
+    width: 48px;
+    margin: 0 auto;
+  }
+  mat-slider {
+    margin: 0 auto;
+  }
+}
+.colorPicker {
+  position: absolute;
+  height: 48px;
+  width: 96px;
+  border: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border-radius: 16px;
+}
+@media only screen and (min-width: 1000px) {
+  .grid {
+      padding: 8px;
+    grid-template-columns: 50% 50%;
+    grid-gap: 8px;
+  }
+}
+@media only screen and (min-width: 1500px) {
+  .grid {
+    grid-template-columns: 33% 33% 33%;
+  }
+}
+@media only screen and (min-width: 2000px) {
+  .grid {
+    grid-template-columns: 24.5% 24.5% 24.5% 24.5%;
+  }
+}

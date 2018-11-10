@@ -1,0 +1,25 @@
+.container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    position: relative;
+    margin: 1em;
+    .mat-button, .mat-fab, .mat-icon-button, .mat-mini-fab, .mat-raised-button {
+        color: black;
+    }
+  }
+.mat-app-background {
+  padding-top: 64px;
+  min-height: 100vh
+}
+mat-toolbar {
+  position: fixed;
+  z-index: 11;
+}

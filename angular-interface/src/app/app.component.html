@@ -1,0 +1,21 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<mat-toolbar color="accent">
+  <img src="assets/favicon.ico" alt="" style="height: 60%;margin: 20% 16px">
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link
+       routerLink="/devices"
+       routerLinkActive
+       [active]="router.url == '/devices'">
+      Devices
+    </a>
+    <a mat-tab-link
+       routerLink="/sequences"
+       routerLinkActive
+       [active]="router.url == '/sequences'">
+      Seqences
+    </a>
+  </nav>
+</mat-toolbar>
+<div class="mat-app-background">
+  <router-outlet></router-outlet>
+</div>
