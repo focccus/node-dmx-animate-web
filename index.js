@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path')
+const fs = require('fs')
+var https = require('https');
 module.exports = function(dmx,config = {port: 8080}){
   const app = express();
   app.use(express.static(path.join(__dirname, './dist/')));
@@ -19,6 +21,7 @@ module.exports = function(dmx,config = {port: 8080}){
         name: x.name,
         programs: x.getPrograms(),
         isRgb: x.isRgb,
+        reactSound: x.reactSound,
         channels: x.channels,
         isGroup: x.isGroup,
         state: x.getChannelState()
@@ -52,12 +55,21 @@ module.exports = function(dmx,config = {port: 8080}){
   })
   app.post('/api/runSequence/:name',(req,res) => {
     if(!req.params.name) return res.json({success: false})
-    res.json({success: dmx.runSeq(req.params.name)})
+    if(req.body.args) res.json({success: dmx.runSeq(req.params.name)})
+    else res.json({success: dmx.runSeq(req.params.name,...req.body.args)})
   })
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './dist/index.html'))
   });
-  app.listen(config.port, () => console.log('Web interface started at localhost: '+config.port+'!'));
+  app.listen(config.port, () => console.log('Web server started at localhost: '+config.port+'!'));
+  if(config.https && config.credentials && config.httpsPort){
+    config.credentials = {
+      key: fs.readFileSync(config.credentials.key),
+      cert: fs.readFileSync(config.credentials.cert)
+    }
+    var httpsServer = https.createServer(config.credentials, app);
+    httpsServer.listen(config.httpsPort,() => console.log('HTTPS server started at localhost: '+config.httpsPort+'!'))
+  }
 
   return app
 }
