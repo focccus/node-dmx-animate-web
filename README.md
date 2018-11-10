@@ -72,7 +72,7 @@ You can access the http api yourself. There are these endpoints:
 **GET /api/devices **
 
 Returns all devices and groups with this schema:
-```json
+```
 [
 	{
 		"name": String,
@@ -89,7 +89,7 @@ Returns all devices and groups with this schema:
 **GET /api/sequences**
 
 Returns all sequences with this schema:
-```json
+```
 [
 	{
 		"name": String,
@@ -115,7 +115,7 @@ Blackouts all devices. Returns: `{"success":Boolean}`
 Executes a method on a device, animates it or just sets it's channels to a value.
 
 Request Body:
-```json
+```
 {
 	"name": String,
 	"commands": [
@@ -129,7 +129,7 @@ Request Body:
 `type` - The name of a method on the device
 `args` - (optional) An Array of Arguments you would pass into the function usually
 Returns:
-```json
+```
 {
 	"success": Boolean,
 	"results": [
